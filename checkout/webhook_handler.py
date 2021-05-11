@@ -6,7 +6,6 @@ from products.models import Product
 import json
 import time
 
-
 class StripeWH_Handler:
     """Handle Stripe webhooks"""
 
@@ -76,13 +75,13 @@ class StripeWH_Handler:
                     country=shipping_details.address.country,
                     postcode=shipping_details.address.postal_code,
                     town_or_city=shipping_details.address.city,
-                    street_addresst=shipping_details.address.line1,
+                    street_address1=shipping_details.address.line1,
                     street_address2=shipping_details.address.line2,
                     county=shipping_details.address.state,
                     original_bag=bag,
                     stripe_pid=pid,
-                )                
-                for item_id, item_data in json.loads(bag).items():                
+                )
+                for item_id, item_data in json.loads(bag).items():
                     product = Product.objects.get(id=item_id)
                     if isinstance(item_data, int):
                         order_line_item = OrderLineItem(
@@ -103,8 +102,9 @@ class StripeWH_Handler:
             except Exception as e:
                 if order:
                     order.delete()
-                return HttpResponse(content=f'Webhook received: {event["type"]} | ERROR {e}',
-                status=500)
+                return HttpResponse(
+                    content=f'Webhook received: {event["type"]} | ERROR: {e}',
+                    status=500)
         return HttpResponse(
             content=f'Webhook received: {event["type"]} | SUCCESS: Created order in webhook',
             status=200)
