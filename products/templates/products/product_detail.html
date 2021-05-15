@@ -4,9 +4,7 @@
 {% block page_header %}
     <div class="container header-container">
         <div class="row">
-            <div class="col">
-
-            </div>
+            <div class="col"></div>
         </div>
     </div>
 {% endblock %}
@@ -19,11 +17,11 @@
                 <div class="image-container my-5">
                     {% if product.image %}
                         <a href="{{ product.image.url }}" target="_blank">
-                            <img src="{{ product.image.url }}" class="card-img-top img-fluid" alt="{{ product.name }}">
+                            <img class="card-img-top img-fluid" src="{{ product.image.url }}" alt="{{ product.name }}">
                         </a>
-                    {% else %}
+                        {% else %}
                         <a href="">
-                            <img src="{{ MEDIA_URL }}noimage.png" class="card-img-top img-fluid" alt="{{ product.name }}">
+                            <img class="card-img-top img-fluid" src="{{ MEDIA_URL }}noimage.png" alt="{{ product.name }}">
                         </a>
                     {% endif %}
                 </div>
@@ -31,22 +29,22 @@
             <div class="col-12 col-md-6 col-lg-4">
                 <div class="product-details-container mb-5 mt-md-5">
                     <p class="mb-0">{{ product.name }}</p>
-                    <p class="lead mb-0 text-left font-weight-bold">£{{ product.price }}</p>
+                    <p class="lead mb-0 text-left font-weight-bold">${{ product.price }}</p>
                     {% if product.category %}
-                        <p class="small mt-1 mb-0">
-                            <a class="text-muted" href="{% url 'products' %}?category={{ product.category.name }}">
-                                <i class="fas fa-tag mr-1"></i>{{ product.category.friendly_name }}
-                            </a>
-                        </p>
+                    <p class="small mt-1 mb-0">
+                        <a class="text-muted" href="{% url 'products' %}?category={{ product.category.name }}">
+                            <i class="fas fa-tag mr-1"></i>{{ product.category.friendly_name }}
+                        </a>
+                    </p>
                     {% endif %}
                     {% if product.rating %}
-                        <small class="text-muted"><i class="fas fa-star mr-1"></i>{{ product.rating }}</small>
+                        <small class="text-muted"><i class="fas fa-star mr-1"></i>{{ product.rating }} / 5</small>
                     {% else %}
                         <small class="text-muted">No Rating</small>
                     {% endif %}
                     {% if request.user.is_superuser %}
                         <small class="ml-3">
-                            <a href="{% url 'edit_product' product.id %}">Edit</a>
+                            <a href="{% url 'edit_product' product.id %}">Edit</a> | 
                             <a class="text-danger" href="{% url 'delete_product' product.id %}">Delete</a>
                         </small>
                     {% endif %}
@@ -58,10 +56,10 @@
                             {% if s %}
                                 <div class="col-12">
                                     <p><strong>Size:</strong></p>
-                                    <select class="form-control rounded-0 w-50" name="product_size" id="id_product_size">
+                                    <select class="form-control rounded-0 w-50" name="product_size" id='id_product_size'>
                                         <option value="xs">XS</option>
-                                        <option value="s" selected>S</option>
-                                        <option value="m">M</option>
+                                        <option value="s">S</option>
+                                        <option value="m" selected>M</option>
                                         <option value="l">L</option>
                                         <option value="xl">XL</option>
                                     </select>
@@ -100,7 +98,7 @@
                                     <span class="icon">
                                         <i class="fas fa-chevron-left"></i>
                                     </span>
-                                    <span class="text-uppercase">Continue Shopping</span>
+                                    <span class="text-uppercase">Keep Shopping</span>
                                 </a>
                                 <input type="submit" class="btn btn-black rounded-0 text-uppercase mt-5" value="Add to Bag">
                             </div>
@@ -111,7 +109,7 @@
                 </div>
             </div>
         </div>
-    </div> 
+    </div>
 {% endblock %}
 
 {% block postloadjs %}
